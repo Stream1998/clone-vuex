@@ -5,9 +5,13 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
 	state: {
-		num: 0,
+		num: 10,
 	},
-	getters: {},
+	getters: {
+		double(state) {
+			return state.num * 2;
+		}
+	},
 	mutations: {},
 	actions: {},
 });

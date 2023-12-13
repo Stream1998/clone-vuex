@@ -11,6 +11,18 @@ class Store {
 				state: options.state || {},
 			}
 		});
+
+		// 实现 getter
+		const getters = options.getters || {};
+		this.getters = {};
+		// 将 getter 中的每一项都做代理，访问则调用对应的方法，并将 state 作为参数传入。
+		Object.keys(getters).forEach(key => {
+			Object.defineProperty(this.getters, key, {
+				get: () => {
+					return getters[key](this.state);
+				}
+			});
+		});
 	}
 
 	// 类似于 Object.defineProperty() 的 get 钩子
