@@ -12,7 +12,11 @@ const store = new Vuex.Store({
 			return state.num * 2;
 		}
 	},
-	mutations: {},
+	mutations: {
+		increment(state, num){
+			state.num += num;
+		}
+	},
 	actions: {},
 });
 

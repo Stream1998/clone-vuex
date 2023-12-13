@@ -23,12 +23,27 @@ class Store {
 				}
 			});
 		});
+
+		// 实现 mutation
+		const mutations = options.mutations || {};
+		this.mutations = {};
+		Object.keys(mutations).forEach(key => {
+			this.mutations[key] = (args) => {
+				mutations[key](this.state, args);
+			}
+		});
 	}
 
 	// 类似于 Object.defineProperty() 的 get 钩子
 	// 将 this.$store.vm.state 转换为 this.$store.state 
 	get state() {
 		return this.vm.state;
+	}
+
+	// 触发 mutation
+	// this.$store.commit(mutationName, args);
+	commit(name, args) {
+		this.mutations[name](args);
 	}
 }
 
