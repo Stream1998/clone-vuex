@@ -32,6 +32,15 @@ class Store {
 				mutations[key](this.state, args);
 			}
 		});
+
+		// 实现 actions
+		const actions = options.actions || {};
+		this.actions = {};
+		Object.keys(actions).forEach(key => {
+			this.actions[key] = (args) => {
+				actions[key](this, args);
+			}
+		});
 	}
 
 	// 类似于 Object.defineProperty() 的 get 钩子
@@ -42,8 +51,15 @@ class Store {
 
 	// 触发 mutation
 	// this.$store.commit(mutationName, args);
-	commit(name, args) {
+	// 通过 dispatch 触发的 commit 方法，this 不指向 store，故改为箭头函数
+	commit = (name, args) => {
 		this.mutations[name](args);
+	}
+
+	// 触发 action
+	// this.$store.dispatch(actionName, args);
+	dispatch(name, args) {
+		this.actions[name](args);
 	}
 }
 

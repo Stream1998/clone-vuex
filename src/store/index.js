@@ -17,7 +17,14 @@ const store = new Vuex.Store({
 			state.num += num;
 		}
 	},
-	actions: {},
+	actions: {
+		changeNum({ commit }, args) {
+			const timer = setTimeout(() => {
+				clearTimeout(timer);
+				commit('increment', args);
+			}, 1000);
+		}
+	},
 });
 
 export default store;
