@@ -1,8 +1,22 @@
-// import Vue from 'vue'
+import Vue from 'vue'
 
 class Store {
 	constructor(options) {
-		this.state = options.state || {};
+		// 这么做 state 缺少响应式
+		// this.state = options.state || {};
+
+		// 我们知道 Vue 中的 data 是响应式的，因此创建 Vue 的实例，实现 state 的响应式
+		this.vm = new Vue({
+			data: {
+				state: options.state || {},
+			}
+		});
+	}
+
+	// 类似于 Object.defineProperty() 的 get 钩子
+	// 将 this.$store.vm.state 转换为 this.$store.state 
+	get state() {
+		return this.vm.state;
 	}
 }
 
